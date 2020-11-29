@@ -6,6 +6,7 @@ import json
 from json import loads
 from Preprocessing import read_data,preprocess_data,data_visualization
 from Training import train_test_vectorized, model
+from Predictions import model_prediction
 import pandas as pd
 pd.set_option('max_colwidth', 800)
 # pd.options.display.float_format = "{:.2f}".format
@@ -32,6 +33,26 @@ class Runall:
         model.Train_model(x_train_vectorized, y_train).logistic_regression()
         model.Train_model(x_train_vectorized, y_train).xgboost_classifier()
 
+        print('-------------------model prediction and '
+              'accuracy--------------------')
+        print('-------------------------------Random '
+              'Forest-----------------------')
+
+        model_prediction.MakePrediction(x_test_vectorized,
+                                        y_test).predications(
+            'rf_classifier.pkl')
+
+        print('-------------------------------Xgboost-----------------------')
+
+        model_prediction.MakePrediction(x_test_vectorized,
+                                        y_test).predications(
+            'xgboost.pkl')
+        print('-------------------------------Logistic '
+              'Regression-----------------------')
+
+        model_prediction.MakePrediction(x_test_vectorized,
+                                        y_test).predications(
+            'logistic.pkl')
 
 if __name__ == '__main__':
     runall = Runall()
