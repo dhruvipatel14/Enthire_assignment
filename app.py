@@ -5,6 +5,7 @@ from pyramid.view import view_config, notfound_view_config
 import json
 from json import loads
 from Preprocessing import read_data,preprocess_data,data_visualization
+from Training import train_test_vectorized
 import pandas as pd
 pd.set_option('max_colwidth', 800)
 # pd.options.display.float_format = "{:.2f}".format
@@ -22,6 +23,9 @@ class Runall:
         preprocess_df = preprocess_data.Preprocess.preprocessed_text(self,df=df)
         print(preprocess_df.head())
         data_visualization.Visualization.all_plots(self,preprocess_df)
+        x_train, x_test, y_train, y_test, x_train_vectorized, \
+        x_test_vectorized = train_test_vectorized.Pretraining(
+            preprocess_df).tfidf()
 
 if __name__ == '__main__':
     runall = Runall()
