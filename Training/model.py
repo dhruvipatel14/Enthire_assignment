@@ -49,15 +49,10 @@ class Train_model:
         lgr_model = logistic_reg.fit(self.xtrain, self.ytrain)
 
         pickle.dump(lgr_model, open("logistic.pkl", "wb"))
-        # with open('logistic.pkl','wb') as file:
-        #     pickle.dumps(lgr_model,file)
 
     def xgboost_classifier(self):
         xgb_clf = xgb.XGBClassifier()
         xgb_model = xgb_clf.fit(self.xtrain, self.ytrain)
-        #
-        # with open('xgboost.pkl','wb') as file:
-        #     pickle.dumps(xgb_model,file)
 
         pickle.dump(xgb_model, open("xgboost.pkl", "wb"))
 

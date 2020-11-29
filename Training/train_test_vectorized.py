@@ -2,6 +2,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.utils import class_weight
 import numpy as np
+import pickle
 
 class Pretraining:
     def __init__(self,df):
@@ -38,6 +39,8 @@ class Pretraining:
                                                                y_train))
         print(class_weights)
 
+        pickle.dump(tf_idf_vectorizer, open("tf_idf.pkl", "wb"))
+
         return x_train, x_test, y_train, y_test, x_train_vectorized, \
-               x_test_vectorized, tf_idf_vectorizer
+               x_test_vectorized
 
