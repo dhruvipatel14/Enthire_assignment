@@ -12,7 +12,10 @@ stopword = set(
 
 
 class Preprocess:
+    def __init__(self):
+        """
 
+        """
     def clean_text(self, text):
         #     text = re.sub(r'"',"",text)
         text = re.sub("@[\w]*", "", text)
@@ -31,8 +34,8 @@ class Preprocess:
         return stemmer.stem(text)
 
     def preprocessed_text(self, df):
-        df['text'] = df['text'].apply(lambda x: self.clean_text(x))
-        df['text'] = df['text'].apply(lambda x: self.remove_stopwords(x))
-        df['text'] = df['text'].apply(lambda x: self.stem_corpus(x))
+        df['text'] = df['text'].apply(lambda x: Preprocess.clean_text(self,x))
+        df['text'] = df['text'].apply(lambda x: Preprocess.remove_stopwords(self,x))
+        df['text'] = df['text'].apply(lambda x: Preprocess.stem_corpus(self,x))
 
         return df
