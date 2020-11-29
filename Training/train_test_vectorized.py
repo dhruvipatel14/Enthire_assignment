@@ -20,7 +20,9 @@ class Pretraining:
 
     def tfidf(self):
         x_train, x_test, y_train, y_test = Pretraining.dataset_split(self)
-        tf_idf_vectorizer = TfidfVectorizer(lowercase=True)
+        tf_idf_vectorizer = TfidfVectorizer(lowercase=True,stop_words=None,
+                                            max_df = 0.75,max_features=1000,
+                               ngram_range=(1,2))
         x_train_vectorized = tf_idf_vectorizer.fit_transform(x_train)
         x_test_vectorized = tf_idf_vectorizer.transform(x_test)
 
@@ -37,5 +39,5 @@ class Pretraining:
         print(class_weights)
 
         return x_train, x_test, y_train, y_test, x_train_vectorized, \
-               x_test_vectorized
+               x_test_vectorized, tf_idf_vectorizer
 
