@@ -13,6 +13,10 @@ class Train_model:
         self.ytrain = y_train
 
     def random_forest(self):
+        """
+        Training of Random forest model on given training data
+        :return: saves the model in pickle format
+        """
         rfc = RandomForestClassifier(random_state=42)
         param_grid = {
             'n_estimators': [200, 500],
@@ -26,17 +30,16 @@ class Train_model:
 
         best_param = CV_rfc.best_params_
         best_param.update(random_state=42 , class_weight='balanced')
-        # rfc1 = RandomForestClassifier(random_state=42, class_weight='balanced',
-        #                               max_features='auto', n_estimators=200,
-        #                               max_depth=4, criterion='gini')
 
         rf_classifier = RandomForestClassifier(**best_param)
         rf_model = rf_classifier.fit(self.xtrain,self.ytrain)
-        # with open('rf_classifier.pkl','wb') as file:
-        #     pickle.dumps(rf_model,file)
         pickle.dump(rf_model, open("rf_classifier.pkl", "wb"))
 
     def logistic_regression(self):
+        """
+               Training of Logistic regression model on given training data
+               :return: saves the model in pickle format
+        """
         param_grid = {"C": np.logspace(-3, 3, 7), "penalty": ["l1", "l2"],
                 "class_weight": ['balanced', 'None']}  
         lgr = LogisticRegression()
@@ -51,6 +54,10 @@ class Train_model:
         pickle.dump(lgr_model, open("logistic.pkl", "wb"))
 
     def xgboost_classifier(self):
+        """
+         Training of Logistic regression model on given training data
+        :return: saves the model in pickle format
+        """
         xgb_clf = xgb.XGBClassifier()
         xgb_model = xgb_clf.fit(self.xtrain, self.ytrain)
 

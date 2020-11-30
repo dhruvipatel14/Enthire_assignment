@@ -22,6 +22,11 @@ pyramid.includes = pyramid_swagger
 class Runall:
 
     def operations(self):
+        """
+        Performs all the process of machine learning life cycle by executing 
+        all the functions
+        :return: 
+        """
         df = read_data.ReadData.read_dataset(self)
         preprocess_df = preprocess_data.Preprocess.preprocessed_text(self,df=df)
         print(preprocess_df.head())
@@ -63,6 +68,11 @@ def notfound(request):
 
 @view_config(route_name='predict', renderer='json', request_method='POST')
 def get_predict(request):
+    """
+    Predict the sentiment of given text
+    :param request: contains params from request API
+    :return: response with predicted sentiment
+    """
     request_data = request.json_body['text']
 
     tfidf_obj = pickle.load(open('tf_idf.pkl','rb'))

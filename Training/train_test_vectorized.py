@@ -9,6 +9,10 @@ class Pretraining:
         self.df =  df
 
     def dataset_split(self):
+        """
+        Split the dataset into train and test dataset
+        :return: x_train,x_test,y_train,y_test
+        """
         x_train, x_test, y_train, y_test = train_test_split(self.df['text'],
                                                             self.df[
                                                                 'airline_sentiment'],
@@ -20,6 +24,14 @@ class Pretraining:
         return x_train,x_test,y_train,y_test
 
     def tfidf(self):
+        """
+        Converting text into vectors using TF-IDF and pickle the TF-IDF
+        object
+        Also calculates the class weights, based on the class weights it is
+        found that given  data is highly imbalanced
+        :return: x_train, x_test, y_train, y_test, x_train_vectorized, \
+               x_test_vectorized
+        """
         x_train, x_test, y_train, y_test = Pretraining.dataset_split(self)
         tf_idf_vectorizer = TfidfVectorizer(lowercase=True,stop_words=None,
                                             max_df = 0.75,max_features=1000,

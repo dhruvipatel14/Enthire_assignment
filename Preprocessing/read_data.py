@@ -3,11 +3,11 @@ pd.set_option('max_colwidth', 800)
 
 
 class ReadData:
-    def __init__(self):
-        """
-
-        """
     def read_dataset(self):
+        """
+        Read the locally stored dataset
+        :return:  dataframe of given csv
+        """
         data = pd.read_csv(
             r'F:\online_competitions\airline_sentiment_analysis.csv')
         df = pd.DataFrame(data)

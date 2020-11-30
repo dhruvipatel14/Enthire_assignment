@@ -8,6 +8,12 @@ class MakePrediction:
         self.y_test = y_test
 
     def predications(self,model_path):
+        """
+        Calculates and print the accuracy, Precision recall score, F1 score
+        and classification report
+        :param model_path: Path of pickled model
+        :return:
+        """
         model = pickle.load(open(model_path, 'rb'))
         predictions = model.predict(self.x_test)
 
