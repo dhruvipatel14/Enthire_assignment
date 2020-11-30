@@ -25,7 +25,7 @@ class Runall:
         df = read_data.ReadData.read_dataset(self)
         preprocess_df = preprocess_data.Preprocess.preprocessed_text(self,df=df)
         print(preprocess_df.head())
-        # data_visualization.Visualization.all_plots(self,preprocess_df)
+        data_visualization.Visualization.all_plots(self,preprocess_df)
         x_train, x_test, y_train, y_test, x_train_vectorized, \
         x_test_vectorized  = \
             train_test_vectorized.Pretraining(
