@@ -1,0 +1,91 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Swagger documentation for sentiment prediction API",
+    "version": "1.0.5",
+    "title": "Sentiment Prediction of airline review",
+    "contact": {
+      "email": "dhruvi7070@yahoo.com"
+    }
+  },
+  "host": "localhost",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Sentiment Prediction",
+      "description": "Predict sentiment of review of airline"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/predict": {
+      "post": {
+        "tags": [
+          "sentiment"
+        ],
+        "summary": "Predict sentiment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "text",
+            "in": "body",
+            "description": "unseen data to predict sentiment",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sentiment predicted",
+    "schema": {
+              "$ref": "#/definitions/Prediction"
+            }
+          }
+        }
+      }}},
+
+   "definitions": {
+    "Prediction": {
+      "type": "object",
+      "properties": {
+        "sentiment": {
+          "type": "string",
+          "example": "positive"
+        }
+      },
+      "required": [
+        "sentiment"
+      ]
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "example": {
+        "message": "User not found."
+      }
+    }
+  }
+
+
+}

@@ -3,13 +3,13 @@ from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.view import view_config, notfound_view_config
 import json
-from json import loads
+import pyramid
+import pyramid_swagger
 from Preprocessing import read_data,preprocess_data,data_visualization
 from Training import train_test_vectorized, model
 from Predictions import model_prediction
 import pandas as pd
 pd.set_option('max_colwidth', 800)
-# pd.options.display.float_format = "{:.2f}".format
 pd.set_option('display.max_columns', 5)
 pd.set_option('display.width', 2000)
 import cufflinks as cf
@@ -17,6 +17,7 @@ cf.go_offline()
 from plotly.offline import iplot
 import plotly.graph_objs as go
 import pickle
+pyramid.includes = pyramid_swagger
 
 class Runall:
 
@@ -30,9 +31,9 @@ class Runall:
             train_test_vectorized.Pretraining(
             preprocess_df).tfidf()
 
-        # model.Train_model(x_train_vectorized,y_train).random_forest()
-        # model.Train_model(x_train_vectorized, y_train).logistic_regression()
-        # model.Train_model(x_train_vectorized, y_train).xgboost_classifier()
+        model.Train_model(x_train_vectorized,y_train).random_forest()
+        model.Train_model(x_train_vectorized, y_train).logistic_regression()
+        model.Train_model(x_train_vectorized, y_train).xgboost_classifier()
 
         print('-------------------model prediction and '
               'accuracy--------------------')
@@ -74,11 +75,22 @@ def get_predict(request):
     return Response(json.dumps(response))
 
 if __name__ == '__main__':
+
     runall = Runall()
     runall.operations()
 
+    settings = {'pyramid_swagger.schema_directory': 'api_docs/',
+                'pyramid_swagger.enable_swagger_spec_validation':
+                    'pyramid_debugtoolbar pyramid_tm',
+                'pyramid_swagger.enable_request_validation ': True,
+                'pyramid_swagger.enable_response_validation': True,
+                'pyramid_swagger.include_missing_properties': True,
+                'pyramid_swagger.enable_api_doc_views': True
+                }
 
-    config = Configurator()
+    config = Configurator(settings=settings)
+    config.include('pyramid_swagger')
+    config.add_static_view('static', 'static', cache_max_age=3600)
 
     config.add_route('predict', '/predict')
     config.add_view(get_predict, route_name='predict')
